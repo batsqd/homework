@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.homework.dao.ISellerDao">
+<select id="selectSeller" resultType="com.homework.model.Seller" parameterType="String">
+    SELECT * FROM seller WHERE nickname = #{nickname}
+</select>
+<insert id="registerSeller" parameterType="com.homework.model.Seller">
+    insert into seller (nickname,password,register_time) values (#{nickname},#{password},CURRENT_DATE );
+</insert>
+</mapper>

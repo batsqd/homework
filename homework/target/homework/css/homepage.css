@@ -1,0 +1,142 @@
+.header{
+    width: 830px;
+    height: 40px;
+    #background: silver;
+    margin: 0 auto;
+}
+
+
+.logo{
+    width: 290px;
+    height: 40px;
+    background: green;
+    float: left;
+}
+#search_box {
+    width: 201px;
+    height: 31px;
+    background: url(http://localhost:8080/homework/style_images/bg_search_box.gif);
+    margin-top: 4px;
+    margin-left: 100px;
+    float: left;
+    #background: yellow;
+}
+#search_box #s {
+    float: left;
+    padding: 0;
+    margin: 2px 2px 2px 4px;
+    border: 0;
+    width: 159px;
+    height:25px;
+    #background: none;
+    font-size: .8em;
+}
+#search_box #go {
+    float: right;
+    margin: 3px 4px 0 0;
+}
+.login{
+    width: 40px;
+    height: 30px;
+    #background: blue;
+    float: right;
+    margin-top: 8px;
+    font-size: 18px;
+}
+.buyer-nickname{
+    width: 140px;
+    height: 30px;
+    #background: blue;
+    float: left;
+    margin-top: 8px;
+    margin-left: 40px;
+    font-size: 18px;
+    text-align: center;
+}
+
+
+body{
+    margin: 0 auto;
+    width: 830px;
+    height: 780px;
+    /*border: 1px solid blue;*/
+    font-size: 12px;
+
+}
+span{
+    font-size: 12px;
+     color: black;
+}
+
+
+.navigation_bar{
+    width: 785px;
+    height: 25px;
+    /* border: 1px solid blue;*/
+
+}
+.navigation_bar  a{
+    float: right;
+    width: 70px;
+    height: 25px;
+    font-size:12px;
+    /*border: 1px solid red;*/
+}
+.div1{
+    width: 830px;
+    height: 780px;
+    /*border: 1px solid gray;*/
+}
+
+.faceul{
+    width: 830px;
+    height: 245px;
+    list-style-type: none;
+    padding: 0;
+    /*background-color: green;*/
+}
+
+.faceul li{
+    float: left;
+    width: 200px;
+    height: 200px;
+    margin-left: 6px;
+    text-align: center;
+    /*background-color: pink;*/
+}
+
+.faceul img{
+    margin-top: 2px;
+    width: 140px;
+    height: 200px;
+    padding-bottom: 2px;
+}
+
+a:link{
+    text-decoration: none;
+}
+.purchasedLabel{
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 40px;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 14px;
+    font-size: 12px;
+    transform: rotate(-45deg);
+    color: red;
+}
+.price{
+    font-size: 16px;
+    font-weight: bold;
+    color: red;
+}
+.noPurchasedCommodityRight{
+
+    margin-left: 540px;
+
+}
+.allCommodityLeft{
+    margin-left: 50px;
+}
