@@ -12,6 +12,7 @@ public class SellerValidation implements HandlerInterceptor{
         if(request.getSession().getAttribute("seller")!=null){
             return true;
         }else{
+            //111111111
             //该方法执行完后会继续往下执行
             request.getRequestDispatcher("/WEB-INF/views/sellerLogin.jsp").forward(request,response);
             return false;
