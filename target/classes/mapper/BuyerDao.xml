@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IBuyerDao接口方法提供sql语句配置 -->
+<mapper namespace="com.homework.dao.IBuyerDao">
+
+    <select id="selectBuyer" resultType="com.homework.model.Buyer" parameterType="String">
+        SELECT * FROM buyer WHERE nickname = #{nickname}
+    </select>
+    <insert id="registerBuyer" parameterType="com.homework.model.Buyer">
+        insert into buyer (nickname,password,register_time) values (#{nickname},#{password},CURRENT_DATE );
+    </insert>
+    <select id="selectNumsDistinctCommodity" parameterType="String" resultType="int">
+        select count(DISTINCT commodity_id) from buy where  buyer_nickname=#{buyer_nickname}
+    </select>
+</mapper>

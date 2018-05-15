@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IBuyerDao接口方法提供sql语句配置 -->
+<mapper namespace="com.homework.dao.IBuyDao">
+   <select id="selectPurchasedCommodity" resultType="com.homework.model.PurchasedCommodity">
+       select * from buy inner join commodity where commodity.commodity_id=buy.commodity_id
+       and buyer_nickname=#{buyer_nickname} limit #{pos},#{nums}
+   </select>
+    <select id="selectRecordsPurchasedCommodity" parameterType="String" resultType="int">
+        select count(*) from buy inner join commodity where commodity.commodity_id=buy.commodity_id
+        and buy.buyer_nickname=#{buyer_nickname}
+    </select>
+    <delete id="deletePurchasedCommodityRecord" parameterType="int">
+        delete from buy where id = #{id}
+    </delete>
+</mapper>
