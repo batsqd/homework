@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.homework.dao.IShoppingCarDao">
+    <insert id="commodityAddToShoppingCar"  parameterType="com.homework.model.ShoppingCar">
+         insert into shoppingCar(buyer_nickname,commodity_id,commodity_nums_add_to_shopping_car,
+         commodity_timestamp_add_to_shopping_car)values(#{buyer_nickname},#{commodity_id},
+         #{commodity_nums_add_to_shopping_car},now())
+    </insert>
+    <insert id="buyCommodities" parameterType="com.homework.model.Buy">
+         insert into buy(buyer_nickname,commodity_id,timestamp_buy,price_buy,nums_buy)values(#{buyer_nickname}
+         ,#{commodity_id},now(),#{price_buy},#{nums_buy})
+    </insert>
+
+    <select id="selectNumsOfCommoditiesInShoppingCar" parameterType="String" resultType="int">
+        select sum(commodity_nums_add_to_shopping_car) from shoppingCar where buyer_nickname=#{buyer_nickname}
+    </select>
+    <select id="selectCommodityInShoppingCar" resultType="com.homework.model.CommodityInShoppingCar">
+        select commodity.image_link,commodity.commodity_id,commodity.title,commodity.cur_price,commodity.inventory,
+        shoppingCar.id,shoppingCar.commodity_nums_add_to_shopping_car,shoppingCar.commodity_timestamp_add_to_shopping_car,
+        shoppingCar.buyer_nickname from commodity inner join shoppingCar
+        where commodity.commodity_id = shoppingCar.commodity_id and shoppingCar.buyer_nickname
+        = #{buyer_nickname} limit #{pos},#{nums}
+    </select>
+    <select id="selectCommodityRecordsInShoppingCar" parameterType="String" resultType="int">
+        select count(*) from commodity inner join shoppingCar
+        where commodity.commodity_id = shoppingCar.commodity_id and shoppingCar.buyer_nickname = #{buyer_nickname}
+    </select>
+    <delete id="deleteCommodityInShoppingCar" parameterType="int">
+       delete from shoppingCar where id= #{shoppingCarId}
+    </delete>
+    <delete id="deleteCommodityInCarByCommodityId" parameterType="int">
+        delete from shoppingCar where commodity_id=#{commodity_id}
+    </delete>
+</mapper>

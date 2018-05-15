@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为IUserDao接口方法提供sql语句配置 -->
+<mapper namespace="com.homework.dao.ICommodityDao">
+
+    <select id="selectHomepageCommodities" resultType="com.homework.model.Commodity" parameterType="byte">
+        SELECT * FROM commodity WHERE mark = #{id}
+    </select>
+    <select id="selectHomepageCommoditiesHitPurchasedLabel" parameterType="String" resultType="com.homework.model.PurchasedCommodity">
+        select * from commodity left join buy on commodity.commodity_id = buy.commodity_id and buy.buyer_nickname=#{buyer_nickname} where commodity.mark=1
+    </select>
+    <select id="selectNoPurchasedCommodity" resultType="com.homework.model.PurchasedCommodity">
+       select * from commodity left join buy on commodity.commodity_id = buy.commodity_id and buy.buyer_nickname=#{buyer_nickname} where buy.nums_buy is NULL limit #{pos},#{nums}
+    </select>
+    <select id="selectCountRecordsNoPurchasedCommodity" parameterType="String" resultType="int">
+        select count(*) from commodity left join buy on commodity.commodity_id = buy.commodity_id and buy.buyer_nickname=#{buyer_nickname} and buy.nums_buy =0
+    </select>
+    <select id="selectCommoditiesHitPurchasedLabelList" resultType="com.homework.model.PurchasedCommodity">
+       select * from commodity left join buy on commodity.commodity_id = buy.commodity_id and buy.buyer_nickname=#{buyer_nickname} group by commodity.commodity_id limit #{pos},#{nums}
+    </select>
+    <!--可能需要删除-->
+    <select id="selectCommoditiesHitPurchasedLabelRecords" parameterType="String" resultType="int">
+        select count(*) from commodity left join buy on commodity.commodity_id = buy.commodity_id and buy.buyer_nickname=#{buyer_nickname}
+    </select>
+
+    <select id="selectCommosityList" resultType="com.homework.model.Commodity">
+        select * from commodity limit #{pos},#{nums}
+    </select>
+    <select id="selectCommodityRecords" resultType="int">
+        select count(*) from commodity;
+    </select>
+    <select id="searchCommodities" resultType="com.homework.model.Commodity" parameterType="string">
+        SELECT * FROM commodity where title LIKE concat('%',#{keyWord},'%') limit 12
+    </select>
+
+    <select id="selectCountSearchCommodities" resultType="int">
+        SELECT COUNT(*) FROM commodity
+    </select>
+
+    <select id="selectCommodities" resultType="com.homework.model.Commodity" parameterType="hashmap">
+        SELECT * FROM commodity where title LIKE concat('%',#{keyWord},'%') limit #{begin},#{incr}
+    </select>
+
+
+    <select id="selectCommodityDetail" resultType="com.homework.model.Commodity" parameterType="int">
+        SELECT * FROM commodity WHERE commodity_id = #{commodity_id}
+    </select>
+    <insert id="insertCommodity" parameterType="com.homework.model.Commodity">
+        <!-- 将插入数据的主键返回，返回到Commodity对象中 -->
+        <!-- keyProperty：将查询到的主键值设置到parameterType对象的哪个属性中 -->
+        <!-- order：SELECT LAST_INSERT_ID()语句的执行顺序（相对于insert语句来说的执行顺序） -->
+        <!-- resultType：指定SELECT LAST_INSERT_ID()语句的结果类型 -->
+        <selectKey keyProperty="commodity_id" order="AFTER" resultType="java.lang.Integer">
+            <!-- SELECT LAST_INSERT_ID()：得到刚insert到数据表中的记录的主键值，只适用于自增主键 -->
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+
+        insert into commodity(title,image_link,cur_price,commodity_abstract,full_text,inventory)
+         values(#{title},#{image_link},#{cur_price},#{commodity_abstract},#{full_text},#{inventory})
+
+    </insert>
+    <update id="updateCommodityInfo" parameterType="com.homework.model.Commodity">
+        update commodity set title = #{title},image_link= #{image_link},cur_price = #{cur_price},
+        commodity_abstract = #{commodity_abstract},full_text = #{full_text},inventory = #{inventory}
+        where commodity_id = #{commodity_id}
+    </update>
+    <update id="updateCommodityImageLocation" >
+         update commodity set image_link = #{image_link} where commodity_id =#{commodity_id}
+    </update>
+    <delete id="deleteCommodityByCommodityId" parameterType="int">
+        delete from commodity where commodity_id = #{commodity_id}
+    </delete>
+    <update id="updateCommodityInventory">
+        update commodity set inventory =inventory- #{buyNums} where commodity_id = #{commodity_id}
+    </update>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.homework.dao.IPublishDao">
+    <insert id="insertPublishRecord" parameterType="com.homework.model.Publish">
+        insert into publish(seller_nickname,commodity_id,time_publish)
+                      values(#{seller_nickname},#{commodity_id},now())
+    </insert>
+    
+    <select id="selectPublishCommoodities"  resultType="com.homework.model.PublishCommodity">
+        select * from publish inner join commodity where publish.seller_nickname=#{seller_nickname} and
+        commodity.commodity_id = publish.commodity_id limit #{pos},#{nums}
+    </select>
+    <update id="updateSellOutNums">
+        update publish set nums_sell_out=nums_sell_out + #{nums_buy} where commodity_id =#{commodity_id}
+    </update>
+    <select id="selectPublishCommoditiesRecordsBySeller" parameterType="String" resultType="int">
+        select count(*) from publish inner join commodity where publish.seller_nickname=#{seller_nickname} and
+        commodity.commodity_id = publish.commodity_id
+    </select>
+    <select id="selectPublishCommoditiesRecordsByCommodityId" parameterType="int" resultType="com.homework.model.PublishCommodity">
+        select * from commodity inner join publish where commodity.commodity_id = publish.commodity_id and commodity.commodity_id =#{commodity_id}
+    </select>
+    <delete id="deleteSellerPublish">
+        delete from publish where seller_nickname=#{seller_nickname} and commodity_id=#{commodity_id}
+    </delete>
+    <select id="selectCommoditySellOutNums" resultType="int">
+        select nums_sell_out from publish where seller_nickname=#{seller_nickname} and commodity_id =#{commodity_id}
+    </select>
+</mapper>
